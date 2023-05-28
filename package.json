@@ -1,6 +1,7 @@
 {
   "name": "profileimage",
   "version": "0.1.0",
+  "homepage": "https://rishabh572000.github.io/profileimage",
   "private": true,
   "scripts": {
     "dev": "next dev -p 2222",
@@ -15,6 +16,7 @@
     "@types/react-dom": "18.2.4",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "gh-pages": "^5.0.0",
     "next": "13.4.3",
     "react": "18.2.0",
     "react-cropper": "^2.3.3",
