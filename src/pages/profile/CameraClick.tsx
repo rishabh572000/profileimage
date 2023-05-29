@@ -1,14 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Webcam from 'react-webcam';
 
 function CameraClick({showimageModal, cameraImage}) {
   const webcamRef = React.useRef(null);
+  const [systemCamera, setSystemCamera] = useState(false)
 
+  const checkCameraAvailability = async () => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const hasCamera = devices.some(device => device.kind === 'videoinput');
+      
+      if (!hasCamera) {
+        // Show your alert here
+        alert('Camera not available on this device.');
+        showimageModal({result:false, type:'camera'})
+      }
+      else{
+        setSystemCamera(true)
+      }
+    } catch (error) {
+      console.error('Error checking camera availability:', error);
+    }
+  };
 
+  useEffect(() => {
+    checkCameraAvailability();
+  }, []);
 
   return (
 <>
-    <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
+{systemCamera &&  <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none'>
     <div className='relative w-auto my-6 mx-auto max-w-3xl'>
     <div className='sm:py-4 sm:px-2 py-8 px-7'>
     <div className='border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none min-w-[762px]'>
@@ -45,7 +66,8 @@ function CameraClick({showimageModal, cameraImage}) {
     </div>
     </div>
     </div>
-    </div>
+    </div>}
+   
 
 
 </>
